@@ -1,7 +1,5 @@
 <% if @product.has_variants? %>
   <div id="product-variants">
-    <h2><%= t('variants') %></h2>
-        
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options index-<%= index %>">
@@ -17,7 +15,7 @@
               <% classes << ( Spree::Config[:allow_backorders] || variants.sum(&:count_on_hand) > 0 ? "in-stock" : "out-of-stock hide" ) %>
             <% end %>
           <% end %>
-          <% classes << type.presentation.to_s.downcase! %>
+          <% classes << value.presentation.to_s.downcase! %>
           <li>
             <%= link_to value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, value.presentation), "#", :title => value.presentation, :class => classes.join(" "), :rel => "#{type.id}-#{value.id}" %>
           </li>
